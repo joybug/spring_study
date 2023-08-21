@@ -1,10 +1,12 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Array;
 import java.util.*;
 
+//@Repository
 public class MemoryMemberRepositoy implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<>();
