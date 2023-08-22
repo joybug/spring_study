@@ -6,32 +6,23 @@ import hello.hellospring.repository.MemoryMemberRepositoy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import java.util.List;
 
-import java.util.*;
-import java.util.function.Function;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@Transactional
+public class MemberServiceIntegrationTest {
 
-class MemberServiceTest {
-
-    MemoryMemberRepositoy memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
     MemberService memberService;
-
-
-    @BeforeEach
-    public void beforeEcah(){
-        memberRepository = new MemoryMemberRepositoy();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-        System.out.println("clear store");
-    }
 
     @Test
     void 회원가입() {
@@ -40,8 +31,6 @@ class MemberServiceTest {
         member.setName("spring");
         //when
         Long saveId = memberService.join(member);
-
-
 
         //then
         Member findMember = memberService.findOne(saveId).get();
